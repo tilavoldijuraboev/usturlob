@@ -1,0 +1,1 @@
+const FIZ_JADVALLAR = [];
