@@ -3,7 +3,7 @@ const FIZ_JADVALLAR = [
     id: "jad_doimiylar",
     title: "1. Fundamental fizik doimiylar",
     icon: "📌",
-    content: `
+    content: String.raw`
       <input type="text" class="table-search" placeholder="Jadval ichidan qidirish...">
       <div class="table-wrap">
         <table class="data-table">
