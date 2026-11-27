@@ -10,6 +10,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (typeof initOwl === "function") initOwl();
 
+  // Navigatsiya tarixi (Orqaga tugmasi aniq bir pog'ona qaytishi uchun)
+  let navStack = [];
+
   let currentTheme = localStorage.getItem("usturlob_theme") || "blue";
   let currentMode = localStorage.getItem("usturlob_mode") || "dark";
 
@@ -68,33 +71,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
     sectionsGrid.querySelectorAll(".section-card").forEach(card => {
       card.addEventListener("click", () => {
-        openSection(card.getAttribute("data-sec-id"));
+        const sec = SITE_DATA.sections.find(s => s.id === card.getAttribute("data-sec-id"));
+        if (sec) {
+          navStack = [sec];
+          renderNode(sec);
+        }
       });
     });
   }
   function showHome() {
+    navStack = [];
     subView.classList.add("hidden");
     searchView.classList.add("hidden");
     homeView.classList.remove("hidden");
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  function openSection(secId) {
-    const section = SITE_DATA.sections.find(s => s.id === secId);
-    if (!section) return;
-
+  function renderNode(node) {
     homeView.classList.add("hidden");
     searchView.classList.add("hidden");
     subView.classList.remove("hidden");
 
-    document.getElementById("subTitle").textContent = `${section.icon} ${section.title}`;
+    document.getElementById("subTitle").textContent = `${node.icon || ""} ${node.title}`;
     const subContent = document.getElementById("subContent");
 
-    if (!section.items || section.items.length === 0) {
-      subContent.innerHTML = `<div class="empty-box"><h3>${section.title}</h3></div>`;
+    if (node.content) {
+      subContent.innerHTML = node.content;
+    } else if (!node.items || node.items.length === 0) {
+      subContent.innerHTML = `<div class="empty-box"><h3>${node.title}</h3></div>`;
     } else {
-      subContent.innerHTML = `<div class="sections-grid">` + section.items.map(item => `
-        <div class="section-card">
+      subContent.innerHTML = `<div class="sections-grid">` + node.items.map((item, idx) => `
+        <div class="section-card" data-idx="${idx}">
           <div class="card-icon">${item.icon || "📘"}</div>
           <div class="card-info">
             <h3>${item.title}</h3>
@@ -102,14 +109,32 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
         </div>
       `).join("") + `</div>`;
+
+      subContent.querySelectorAll(".section-card").forEach(card => {
+        card.addEventListener("click", () => {
+          const nextNode = node.items[Number(card.getAttribute("data-idx"))];
+          if (nextNode) {
+            navStack.push(nextNode);
+            renderNode(nextNode);
+          }
+        });
+      });
     }
 
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   document.getElementById("homeBtn").addEventListener("click", showHome);
-  document.getElementById("backBtn").addEventListener("click", showHome);
   document.getElementById("searchBackBtn").addEventListener("click", showHome);
+
+  document.getElementById("backBtn").addEventListener("click", () => {
+    navStack.pop();
+    if (navStack.length === 0) {
+      showHome();
+    } else {
+      renderNode(navStack[navStack.length - 1]);
+    }
+  });
 
   const searchBar = document.getElementById("searchBar");
   const searchInput = document.getElementById("searchInput");
@@ -128,6 +153,18 @@ document.addEventListener("DOMContentLoaded", () => {
     showHome();
   });
 
+  function collectMatches(nodes, query, path, results) {
+    nodes.forEach(item => {
+      const currentPath = [...path, item];
+      if (item.title.toLowerCase().includes(query)) {
+        results.push({ item, path: currentPath });
+      }
+      if (item.items && item.items.length > 0) {
+        collectMatches(item.items, query, currentPath, results);
+      }
+    });
+  }
+
   searchInput.addEventListener("input", (e) => {
     const query = e.target.value.trim().toLowerCase();
     if (!query) {
@@ -140,33 +177,26 @@ document.addEventListener("DOMContentLoaded", () => {
     searchView.classList.remove("hidden");
 
     const matches = [];
-    SITE_DATA.sections.forEach(sec => {
-      if (sec.title.toLowerCase().includes(query)) {
-        matches.push({ title: sec.title, icon: sec.icon, secId: sec.id });
-      }
-      if (sec.items) {
-        sec.items.forEach(item => {
-          if (item.title.toLowerCase().includes(query)) {
-            matches.push({ title: item.title, icon: item.icon || "📘", secId: sec.id });
-          }
-        });
-      }
-    });
+    collectMatches(SITE_DATA.sections, query, [], matches);
 
     if (matches.length === 0) {
       searchResults.innerHTML = `<div class="empty-box" style="grid-column: 1 / -1;">Topilmadi</div>`;
     } else {
-      searchResults.innerHTML = matches.map(m => `
-        <div class="section-card" data-sec-id="${m.secId}">
-          <div class="card-icon">${m.icon}</div>
+      searchResults.innerHTML = matches.map((m, i) => `
+        <div class="section-card" data-match-idx="${i}">
+          <div class="card-icon">${m.item.icon || "📘"}</div>
           <div class="card-info">
-            <h3>${m.title}</h3>
+            <h3>${m.item.title}</h3>
           </div>
         </div>
       `).join("");
 
       searchResults.querySelectorAll(".section-card").forEach(card => {
-        card.addEventListener("click", () => openSection(card.getAttribute("data-sec-id")));
+        card.addEventListener("click", () => {
+          const chosen = matches[Number(card.getAttribute("data-match-idx"))];
+          navStack = [...chosen.path];
+          renderNode(chosen.item);
+        });
       });
     }
   });
