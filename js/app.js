@@ -86,6 +86,15 @@ document.addEventListener("DOMContentLoaded", () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
+  function goBack() {
+    navStack.pop();
+    if (navStack.length === 0) {
+      showHome();
+    } else {
+      renderNode(navStack[navStack.length - 1]);
+    }
+  }
+
   function renderMath(el) {
     if (typeof renderMathInElement === "function") {
       renderMathInElement(el, {
@@ -111,15 +120,76 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("subTitle").textContent = `${node.icon || ""} ${node.title}`;
     const subContent = document.getElementById("subContent");
 
+    // 1. AGAR ELEMENT ICHIDA KONTENT (JADVAL, MAVZU, MASALA) BO'LSA -> RASMDAGIDEK KARTOCHKA
     if (node.content) {
-      subContent.innerHTML = `<div class="content-box">${node.content}</div>`;
+      subContent.innerHTML = `
+        <div class="detail-card">
+          <div class="detail-card-header">
+            <span class="detail-card-title">${node.headerTitle || node.title}</span>
+            <button class="detail-close-btn" id="detailCloseBtn" title="Yopish">✕</button>
+          </div>
+          <div class="detail-card-body">${node.content}</div>
+        </div>
+      `;
+
+      document.getElementById("detailCloseBtn").addEventListener("click", goBack);
       renderMath(subContent);
+
+      // Jadval ichida qidiruv bo'lsa avtomatik ishlatish
+      const tblSearch = subContent.querySelector(".table-search");
+      const tblRows = subContent.querySelectorAll("tbody tr");
+      if (tblSearch && tblRows.length > 0) {
+        tblSearch.addEventListener("input", (e) => {
+          const q = e.target.value.trim().toLowerCase();
+          tblRows.forEach(tr => {
+            tr.style.display = tr.textContent.toLowerCase().includes(q) ? "" : "none";
+          });
+        });
+      }
+
+      // Qiymat ustiga bosilganda nusxalash (Copy)
+      subContent.querySelectorAll(".copy-val").forEach(el => {
+        el.addEventListener("click", () => {
+          const val = el.getAttribute("data-copy") || el.textContent.trim();
+          navigator.clipboard?.writeText(val);
+          const orig = el.textContent;
+          el.textContent = "✓";
+          setTimeout(() => (el.textContent = orig), 700);
+        });
+      });
+
       if (typeof node.onRender === "function") {
         node.onRender(subContent);
       }
-    } else if (!node.items || node.items.length === 0) {
+    }
+    // 2. AGAR BO'SH BO'LSA
+    else if (!node.items || node.items.length === 0) {
       subContent.innerHTML = `<div class="empty-box"><h3>${node.title}</h3></div>`;
-    } else {
+    }
+    // 3. AGAR QATORLI RO'YXAT (viewType: "list") BO'LSA
+    else if (node.viewType === "list") {
+      subContent.innerHTML = `<div class="list-stack">` + node.items.map((item, idx) => `
+        <div class="list-row" data-idx="${idx}">
+          <div class="list-row-left">
+            <span>${item.icon || "📄"}</span>
+            <span>${item.title}</span>
+          </div>
+          <span class="list-row-arrow">→</span>
+        </div>
+      `).join("") + `</div>`;
+
+      subContent.querySelectorAll(".list-row").forEach(row => {
+        row.addEventListener("click", () => {
+          const nextNode = node.items[Number(row.getAttribute("data-idx"))];
+          if (nextNode) {
+            navStack.push(nextNode);
+            renderNode(nextNode);
+          }
+        });
+      });
+    }
+    // 4. ODDIY KARTOCHKALI BO'LIM BO'LSA
+    else {
       subContent.innerHTML = `<div class="sections-grid">` + node.items.map((item, idx) => `
         <div class="section-card" data-idx="${idx}">
           <div class="card-icon">${item.icon || "📘"}</div>
@@ -147,15 +217,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("homeBtn").addEventListener("click", showHome);
   document.getElementById("subHomeBtn").addEventListener("click", showHome);
   document.getElementById("searchBackBtn").addEventListener("click", showHome);
-
-  document.getElementById("backBtn").addEventListener("click", () => {
-    navStack.pop();
-    if (navStack.length === 0) {
-      showHome();
-    } else {
-      renderNode(navStack[navStack.length - 1]);
-    }
-  });
+  document.getElementById("backBtn").addEventListener("click", goBack);
 
   const searchBar = document.getElementById("searchBar");
   const searchInput = document.getElementById("searchInput");
