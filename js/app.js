@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
   const htmlEl = document.documentElement;
-
   const homeView = document.getElementById("homeView");
   const subView = document.getElementById("subView");
   const searchView = document.getElementById("searchView");
@@ -11,7 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
   if (typeof initOwl === "function") initOwl();
 
   let navStack = [];
-
   let currentTheme = localStorage.getItem("usturlob_theme") || "blue";
   let currentMode = localStorage.getItem("usturlob_mode") || "dark";
 
@@ -96,14 +94,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function renderMath(el) {
-    if (typeof renderMathInElement === "function") {
-      renderMathInElement(el, {
-        delimiters: [
-          { left: "$$", right: "$$", display: true },
-          { left: "$", right: "$", display: false }
-        ],
-        throwOnError: false
-      });
+    if (typeof katex !== "undefined") {
+      el.innerHTML = el.innerHTML
+        .replace(/\$\$([\s\S]+?)\$\$/g, (_, tex) =>
+          katex.renderToString(tex, { displayMode: true, throwOnError: false })
+        )
+        .replace(/\$([^$\n]+?)\$/g, (_, tex) =>
+          katex.renderToString(tex, { displayMode: false, throwOnError: false })
+        );
     }
   }
 
@@ -120,7 +118,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("subTitle").textContent = `${node.icon || ""} ${node.title}`;
     const subContent = document.getElementById("subContent");
 
-    // 1. AGAR ELEMENT ICHIDA KONTENT (JADVAL, MAVZU, MASALA) BO'LSA -> RASMDAGIDEK KARTOCHKA
     if (node.content) {
       subContent.innerHTML = `
         <div class="detail-card">
@@ -135,7 +132,6 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("detailCloseBtn").addEventListener("click", goBack);
       renderMath(subContent);
 
-      // Jadval ichida qidiruv bo'lsa avtomatik ishlatish
       const tblSearch = subContent.querySelector(".table-search");
       const tblRows = subContent.querySelectorAll("tbody tr");
       if (tblSearch && tblRows.length > 0) {
@@ -147,27 +143,22 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       }
 
-      // Qiymat ustiga bosilganda nusxalash (Copy)
       subContent.querySelectorAll(".copy-val").forEach(el => {
         el.addEventListener("click", () => {
           const val = el.getAttribute("data-copy") || el.textContent.trim();
           navigator.clipboard?.writeText(val);
-          const orig = el.textContent;
+          const orig = el.innerHTML;
           el.textContent = "✓";
-          setTimeout(() => (el.textContent = orig), 700);
+          setTimeout(() => (el.innerHTML = orig), 700);
         });
       });
 
       if (typeof node.onRender === "function") {
         node.onRender(subContent);
       }
-    }
-    // 2. AGAR BO'SH BO'LSA
-    else if (!node.items || node.items.length === 0) {
+    } else if (!node.items || node.items.length === 0) {
       subContent.innerHTML = `<div class="empty-box"><h3>${node.title}</h3></div>`;
-    }
-    // 3. AGAR QATORLI RO'YXAT (viewType: "list") BO'LSA
-    else if (node.viewType === "list") {
+    } else if (node.viewType === "list") {
       subContent.innerHTML = `<div class="list-stack">` + node.items.map((item, idx) => `
         <div class="list-row" data-idx="${idx}">
           <div class="list-row-left">
@@ -187,9 +178,7 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         });
       });
-    }
-    // 4. ODDIY KARTOCHKALI BO'LIM BO'LSA
-    else {
+    } else {
       subContent.innerHTML = `<div class="sections-grid">` + node.items.map((item, idx) => `
         <div class="section-card" data-idx="${idx}">
           <div class="card-icon">${item.icon || "📘"}</div>
