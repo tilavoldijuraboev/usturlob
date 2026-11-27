@@ -16,22 +16,20 @@ const SITE_DATA = {
   ],
 
   sections: [
-        {
+    {
       id: "fizika",
       title: "Fizika",
       icon: "⚛️",
       desc: "",
       items: [
-        { id: "fiz_mavzular", title: "Mavzular", icon: "📚", items: FIZ_MAVZULAR },
-        { id: "fiz_masalalar", title: "Masalalar yechimlari", icon: "📝", items: FIZ_MASALALAR },
-        { id: "fiz_lab", title: "Elektron laboratoriya", icon: "🔬", items: FIZ_LAB },
-        { id: "fiz_oyinlar", title: "O'yinlar", icon: "🎮", items: FIZ_OYINLAR },
-        { id: "fiz_jadvallar", title: "Jadvallar", icon: "📊", viewType: "list", items: FIZ_JADVALLAR },
-
-        { id: "fiz_materiallar", title: "O'quv materiallari", icon: "📂", items: FIZ_MATERIALLAR }
+        { id: "fiz_mavzular", title: "Mavzular", icon: "📚", viewType: "list", items: typeof FIZ_MAVZULAR !== "undefined" ? FIZ_MAVZULAR : [] },
+        { id: "fiz_masalalar", title: "Masalalar yechimlari", icon: "📝", viewType: "list", items: typeof FIZ_MASALALAR !== "undefined" ? FIZ_MASALALAR : [] },
+        { id: "fiz_lab", title: "Elektron laboratoriya", icon: "🔬", items: typeof FIZ_LAB !== "undefined" ? FIZ_LAB : [] },
+        { id: "fiz_oyinlar", title: "O'yinlar", icon: "🎮", items: typeof FIZ_OYINLAR !== "undefined" ? FIZ_OYINLAR : [] },
+        { id: "fiz_jadvallar", title: "Jadvallar", icon: "📊", viewType: "list", items: typeof FIZ_JADVALLAR !== "undefined" ? FIZ_JADVALLAR : [] },
+        { id: "fiz_materiallar", title: "O'quv materiallari", icon: "📂", viewType: "list", items: typeof FIZ_MATERIALLAR !== "undefined" ? FIZ_MATERIALLAR : [] }
       ]
     },
-
     { id: "matematika", title: "Matematika", icon: "📐", desc: "", items: [] },
     { id: "kimyo", title: "Kimyo", icon: "🧪", desc: "", items: [] },
     { id: "biologiya", title: "Biologiya", icon: "🧬", desc: "", items: [] },
