@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (typeof initOwl === "function") initOwl();
 
-  // Navigatsiya tarixi (Orqaga tugmasi aniq bir pog'ona qaytishi uchun)
   let navStack = [];
 
   let currentTheme = localStorage.getItem("usturlob_theme") || "blue";
@@ -87,16 +86,37 @@ document.addEventListener("DOMContentLoaded", () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
+  function renderMath(el) {
+    if (typeof renderMathInElement === "function") {
+      renderMathInElement(el, {
+        delimiters: [
+          { left: "$$", right: "$$", display: true },
+          { left: "$", right: "$", display: false }
+        ],
+        throwOnError: false
+      });
+    }
+  }
+
   function renderNode(node) {
     homeView.classList.add("hidden");
     searchView.classList.add("hidden");
     subView.classList.remove("hidden");
 
+    const breadcrumbEl = document.getElementById("breadcrumb");
+    if (breadcrumbEl) {
+      breadcrumbEl.textContent = navStack.map(n => n.title).join(" / ");
+    }
+
     document.getElementById("subTitle").textContent = `${node.icon || ""} ${node.title}`;
     const subContent = document.getElementById("subContent");
 
     if (node.content) {
-      subContent.innerHTML = node.content;
+      subContent.innerHTML = `<div class="content-box">${node.content}</div>`;
+      renderMath(subContent);
+      if (typeof node.onRender === "function") {
+        node.onRender(subContent);
+      }
     } else if (!node.items || node.items.length === 0) {
       subContent.innerHTML = `<div class="empty-box"><h3>${node.title}</h3></div>`;
     } else {
@@ -125,6 +145,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   document.getElementById("homeBtn").addEventListener("click", showHome);
+  document.getElementById("subHomeBtn").addEventListener("click", showHome);
   document.getElementById("searchBackBtn").addEventListener("click", showHome);
 
   document.getElementById("backBtn").addEventListener("click", () => {
