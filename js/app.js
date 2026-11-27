@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-   function renderMath(el) {
+  function renderMath(el) {
     const greek = {
       "\\alpha": "α", "\\beta": "β", "\\gamma": "γ", "\\Delta": "Δ",
       "\\varepsilon": "ε", "\\lambda": "λ", "\\mu": "μ", "\\nu": "ν",
@@ -116,8 +116,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
       return `<span style="font-family: 'Cambria Math', 'Times New Roman', serif; font-size: 1.05em;">${s}</span>`;
     });
-  }
-
   }
 
   function renderNode(node) {
