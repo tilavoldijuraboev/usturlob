@@ -1,12 +1,12 @@
 /* =========================================================
-   USTURLOB - PARVOZ QILUVCHI VA RANG-BARANG JILOLI BOYO'G'LI
+   USTURLOB - GITHUB USLUBIDAGI RANG-BARANG SETKA VA BOYO'G'LI
    ========================================================= */
 
 function initOwl() {
   const container = document.getElementById("owlContainer");
   if (!container) return;
 
-  // 1. Boyo'g'li va katakchali fon uchun maxsus animatsiya stillari
+  // 1. GitHub uslubidagi setka va uchish animatsiyasi stillari
   if (!document.getElementById("owlDynamicStyles")) {
     const style = document.createElement("style");
     style.id = "owlDynamicStyles";
@@ -14,141 +14,156 @@ function initOwl() {
       #owlContainer {
         width: 100%;
         max-width: 380px;
-        height: 165px;
+        height: 155px;
         position: relative;
-        border-radius: 18px;
+        border-radius: 16px;
         border: 1px solid var(--border);
-        background-color: var(--bg-card);
+        background-color: #0d1526;
         background-image:
-          linear-gradient(to right, rgba(148, 163, 184, 0.12) 1px, transparent 1px),
-          linear-gradient(to bottom, rgba(148, 163, 184, 0.12) 1px, transparent 1px);
-        background-size: 24px 24px;
+          linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+        background-size: 18px 18px;
         overflow: hidden;
         box-shadow: var(--shadow);
         margin: 0 auto;
-      }
-      .owl-tiles {
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-      }
-      .owl-tile {
-        position: absolute;
-        width: 22px;
-        height: 22px;
-        border-radius: 4px;
-        opacity: 0.25;
-        transition: opacity 0.8s ease, transform 0.8s ease, background-color 0.8s ease;
-      }
-      .owl-fly-wrap {
-        position: relative;
-        z-index: 2;
-        animation: owlHover 2.6s ease-in-out infinite;
         display: flex;
         align-items: center;
         justify-content: center;
       }
-      @keyframes owlHover {
-        0%, 100% { transform: translateY(0px); }
-        50% { transform: translateY(-8px); }
+      /* GitHub contribution graph kabi rangli kvadratlar bloki */
+      .gh-grid {
+        position: absolute;
+        left: 22%;
+        top: 50%;
+        transform: translateY(-50%);
+        display: grid;
+        grid-template-columns: repeat(9, 14px);
+        grid-template-rows: repeat(5, 14px);
+        gap: 4px;
+        z-index: 1;
+      }
+      .gh-cell {
+        width: 14px;
+        height: 14px;
+        border-radius: 3px;
+        transition: background-color 0.6s ease, opacity 0.6s ease, transform 0.4s ease;
+      }
+      /* Boyo'g'lining parvoz harakati */
+      .owl-fly-wrap {
+        position: relative;
+        z-index: 2;
+        margin-left: 55px;
+        animation: owlFloat 2.4s ease-in-out infinite;
+      }
+      @keyframes owlFloat {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-7px) rotate(2deg); }
       }
       #leftWing {
-        transform-origin: 62px 98px;
-        animation: flapLeft 0.75s ease-in-out infinite alternate;
+        transform-origin: 72px 98px;
+        animation: flapL 0.55s ease-in-out infinite alternate;
       }
       #rightWing {
-        transform-origin: 138px 98px;
-        animation: flapRight 0.75s ease-in-out infinite alternate;
+        transform-origin: 128px 98px;
+        animation: flapR 0.55s ease-in-out infinite alternate;
       }
-      @keyframes flapLeft {
-        0% { transform: rotate(12deg); }
-        100% { transform: rotate(-28deg); }
+      @keyframes flapL {
+        0% { transform: rotate(15deg); }
+        100% { transform: rotate(-25deg); }
       }
-      @keyframes flapRight {
-        0% { transform: rotate(-12deg); }
-        100% { transform: rotate(28deg); }
+      @keyframes flapR {
+        0% { transform: rotate(-15deg); }
+        100% { transform: rotate(25deg); }
       }
     `;
     document.head.appendChild(style);
   }
 
-  // 2. Katakchali fon ichidagi rangli kvadratlar va Qalpoqchali Boyo'g'li SVG
+  // 2. HTML va Rasmdagi Boyo'g'li SVG ko'rinishi
   container.innerHTML = `
-    <div class="owl-tiles" id="owlTiles"></div>
+    <div class="gh-grid" id="ghGrid"></div>
     <div class="owl-fly-wrap">
-      <svg id="usturlobOwl" viewBox="0 0 200 190" width="135" height="135" style="overflow: visible;">
-        <!-- Qanotlar (Qanot qoqib uchish animatsiyasi bilan) -->
-        <path id="leftWing" d="M64 92 C30 78, 22 115, 58 124 Z" fill="#4f46e5" stroke="#818cf8" stroke-width="2" />
-        <path id="rightWing" d="M136 92 C170 78, 178 115, 142 124 Z" fill="#4f46e5" stroke="#818cf8" stroke-width="2" />
+      <svg id="usturlobOwl" viewBox="0 0 200 180" width="115" height="115" style="overflow: visible;">
+        <!-- Qanotlar -->
+        <path id="leftWing" d="M74 92 C42 82, 34 108, 68 114 Z" fill="#6366f1" />
+        <path id="rightWing" d="M126 92 C158 82, 166 108, 132 114 Z" fill="#6366f1" />
 
-        <!-- Asosiy tana -->
-        <ellipse cx="100" cy="105" rx="42" ry="46" fill="#4338ca" stroke="#6366f1" stroke-width="3" />
-        <!-- Qorin qismi -->
-        <ellipse cx="100" cy="116" rx="28" ry="30" fill="#6366f1" opacity="0.55" />
+        <!-- Tana (Binafsha-ko'k) -->
+        <ellipse cx="100" cy="102" rx="34" ry="38" fill="#4f46e5" />
+        <ellipse cx="100" cy="112" rx="22" ry="24" fill="#6366f1" opacity="0.5" />
 
-        <!-- Ko'z kosalari -->
-        <circle cx="84" cy="88" r="18" fill="#ffffff" stroke="#312e81" stroke-width="2.5" />
-        <circle cx="116" cy="88" r="18" fill="#ffffff" stroke="#312e81" stroke-width="2.5" />
+        <!-- Bir-biriga tutashgan ikkita katta oq ko'z -->
+        <circle cx="87" cy="86" r="15" fill="#ffffff" />
+        <circle cx="113" cy="86" r="15" fill="#ffffff" />
 
         <!-- Harakatlanuvchi ko'z qorachiqlari -->
         <g id="leftPupil">
-          <circle cx="84" cy="88" r="8" fill="#0f172a" />
-          <circle cx="81" cy="85" r="2.8" fill="#ffffff" />
+          <circle cx="88" cy="86" r="6.5" fill="#0f172a" />
+          <circle cx="86" cy="84" r="2.2" fill="#ffffff" />
         </g>
         <g id="rightPupil">
-          <circle cx="116" cy="88" r="8" fill="#0f172a" />
-          <circle cx="113" cy="85" r="2.8" fill="#ffffff" />
+          <circle cx="112" cy="86" r="6.5" fill="#0f172a" />
+          <circle cx="110" cy="84" r="2.2" fill="#ffffff" />
         </g>
 
-        <!-- Ko'z qovoqlari (Ko'z yumish uchun) -->
-        <ellipse id="leftLid" cx="84" cy="88" rx="18" ry="0" fill="#4338ca" />
-        <ellipse id="rightLid" cx="116" cy="88" rx="18" ry="0" fill="#4338ca" />
+        <!-- Ko'z qovoqlari -->
+        <ellipse id="leftLid" cx="87" cy="86" rx="15" ry="0" fill="#4f46e5" />
+        <ellipse id="rightLid" cx="113" cy="86" rx="15" ry="0" fill="#4f46e5" />
 
-        <!-- Tumshuq -->
-        <polygon points="94,98 106,98 100,110" fill="#f59e0b" />
+        <!-- Sariq tumshuq -->
+        <polygon points="95,96 105,96 100,106" fill="#facc15" />
 
-        <!-- Akademik Qalpoqcha (Bitiruvchi shlyapasi) -->
-        <polygon points="100,26 54,46 100,62 146,46" fill="#1e1b4b" stroke="#818cf8" stroke-width="2" />
-        <rect x="74" y="50" width="52" height="12" rx="4" fill="#312e81" />
-        <!-- Oltin popukcha -->
-        <path d="M100 46 L138 56 L138 72" fill="none" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round" />
-        <circle cx="138" cy="74" r="3.5" fill="#fbbf24" />
+        <!-- Akademik Qalpoqcha -->
+        <polygon points="100,36 62,52 100,66 138,52" fill="#1e1b4b" stroke="#818cf8" stroke-width="1.5" />
+        <rect x="78" y="55" width="44" height="10" rx="3" fill="#312e81" />
+        <!-- Sariq popuk -->
+        <path d="M100 52 L70 62 L70 74" fill="none" stroke="#facc15" stroke-width="2.5" stroke-linecap="round" />
+        <circle cx="70" cy="75" r="3" fill="#facc15" />
 
-        <!-- Panjalar -->
-        <path d="M84 149 L80 158 M88 149 L88 158 M112 149 L112 158 M116 149 L120 158" stroke="#f59e0b" stroke-width="3.5" stroke-linecap="round" />
+        <!-- Sariq panjalar -->
+        <path d="M88 138 L85 146 M92 138 L92 146 M108 138 L108 146 M112 138 L115 146" stroke="#facc15" stroke-width="3" stroke-linecap="round" />
       </svg>
     </div>
   `;
-  // 3. KATAKCHALAR ICHIDA RANG-BARANG JILOLANUVCHI KVADRATLAR
-  const tilesWrap = document.getElementById("owlTiles");
-  const tileColors = ["#3b82f6", "#8b5cf6", "#ec4899", "#10b981", "#f59e0b", "#06b6d4", "#6366f1"];
-  const tiles = [];
+  // 3. GITHUB USLUBIDAGI RANG-BARANG KATAKCHALAR JILOSI (9x5 = 45 katak)
+  const ghGrid = document.getElementById("ghGrid");
+  const palette = [
+    "#1e293b", // bo'sh/xira katak
+    "#10b981", // yashil
+    "#34d399", // och yashil
+    "#3b82f6", // ko'k
+    "#06b6d4", // moviy
+    "#8b5cf6", // binafsha
+    "#ec4899", // pushti
+    "#f59e0b"  // sariq-oltin
+  ];
 
-  for (let i = 0; i < 18; i++) {
-    const tile = document.createElement("div");
-    tile.className = "owl-tile";
-    const col = Math.floor(Math.random() * 15);
-    const row = Math.floor(Math.random() * 6);
-    tile.style.left = `${col * 24 + 1}px`;
-    tile.style.top = `${row * 24 + 1}px`;
-    tile.style.backgroundColor = tileColors[Math.floor(Math.random() * tileColors.length)];
-    tilesWrap.appendChild(tile);
-    tiles.push(tile);
+  const cells = [];
+  for (let i = 0; i < 45; i++) {
+    const cell = document.createElement("div");
+    cell.className = "gh-cell";
+    // Ba'zi kataklar xira, ba'zilari yorqin rangda bo'lishi uchun
+    const isBright = Math.random() > 0.35;
+    cell.style.backgroundColor = isBright
+      ? palette[Math.floor(Math.random() * (palette.length - 1)) + 1]
+      : palette[0];
+    cell.style.opacity = isBright ? "0.9" : "0.4";
+    ghGrid.appendChild(cell);
+    cells.push(cell);
   }
 
-  // Har 1.2 soniyada ranglar va yorqinlik jilosini o'zgartirish
+  // Har 900 millisekundda kataklar rangini jilolantirish
   setInterval(() => {
-    tiles.forEach(tile => {
-      if (Math.random() > 0.45) {
-        tile.style.opacity = (Math.random() * 0.55 + 0.1).toFixed(2);
-        tile.style.backgroundColor = tileColors[Math.floor(Math.random() * tileColors.length)];
-        const col = Math.floor(Math.random() * 15);
-        const row = Math.floor(Math.random() * 6);
-        tile.style.left = `${col * 24 + 1}px`;
-        tile.style.top = `${row * 24 + 1}px`;
+    cells.forEach(cell => {
+      if (Math.random() > 0.65) {
+        const isBright = Math.random() > 0.3;
+        cell.style.backgroundColor = isBright
+          ? palette[Math.floor(Math.random() * (palette.length - 1)) + 1]
+          : palette[0];
+        cell.style.opacity = isBright ? "0.95" : "0.35";
       }
     });
-  }, 1200);
+  }, 900);
 
   // 4. SICHQONCHA VA BARMOQ HARAKATIGA QARAB KO'Z YUGURTIRISH
   const svg = document.getElementById("usturlobOwl");
@@ -163,7 +178,7 @@ function initOwl() {
     const centerY = rect.top + rect.height / 2;
 
     const angle = Math.atan2(clientY - centerY, clientX - centerX);
-    const maxOffset = 5.5;
+    const maxOffset = 4.5;
 
     const dx = Math.cos(angle) * maxOffset;
     const dy = Math.sin(angle) * maxOffset;
@@ -186,11 +201,14 @@ function initOwl() {
     }
   }, { passive: true });
 
-  // Ustiga bosilganda ko'z qisish va ranglarni chaqnatish
+  // Ustiga bosilganda ko'z qisish va barcha kataklarni chaqnatish
   container.addEventListener("click", () => {
-    leftLid.setAttribute("ry", "18");
-    rightLid.setAttribute("ry", "18");
-    tiles.forEach(t => (t.style.opacity = "0.75"));
+    leftLid.setAttribute("ry", "15");
+    rightLid.setAttribute("ry", "15");
+    cells.forEach(c => {
+      c.style.backgroundColor = palette[Math.floor(Math.random() * (palette.length - 1)) + 1];
+      c.style.opacity = "1";
+    });
     setTimeout(() => {
       leftLid.setAttribute("ry", "0");
       rightLid.setAttribute("ry", "0");
