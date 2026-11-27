@@ -16,11 +16,11 @@ const SITE_DATA = {
   ],
 
   sections: [
-    { id: "fizika", title: "Fizika", icon: "⚛️", items: [] },
-    { id: "matematika", title: "Matematika", icon: "📐", items: [] },
-    { id: "kimyo", title: "Kimyo", icon: "🧪", items: [] },
-    { id: "biologiya", title: "Biologiya", icon: "🧬", items: [] },
-    { id: "blog", title: "Blog", icon: "✍️", items: [] },
-    { id: "kalkulyator", title: "Kalkulyatorlar", icon: "🧮", items: [] }
+    { id: "fizika", title: "Fizika", icon: "⚛️", desc: "", items: [] },
+    { id: "matematika", title: "Matematika", icon: "📐", desc: "", items: [] },
+    { id: "kimyo", title: "Kimyo", icon: "🧪", desc: "", items: [] },
+    { id: "biologiya", title: "Biologiya", icon: "🧬", desc: "", items: [] },
+    { id: "blog", title: "Blog", icon: "✍️", desc: "", items: [] },
+    { id: "kalkulyator", title: "Kalkulyatorlar", icon: "🧮", desc: "", items: [] }
   ]
 };
