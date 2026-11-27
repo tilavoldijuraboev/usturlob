@@ -16,7 +16,20 @@ const SITE_DATA = {
   ],
 
   sections: [
-    { id: "fizika", title: "Fizika", icon: "⚛️", desc: "", items: [] },
+    {
+      id: "fizika",
+      title: "Fizika",
+      icon: "⚛️",
+      desc: "",
+      items: [
+        { id: "fiz_mavzular", title: "Mavzular", icon: "📚", items: [] },
+        { id: "fiz_masalalar", title: "Masalalar yechimlari", icon: "📝", items: [] },
+        { id: "fiz_lab", title: "Elektron laboratoriya", icon: "🔬", items: [] },
+        { id: "fiz_oyinlar", title: "O'yinlar", icon: "🎮", items: [] },
+        { id: "fiz_jadvallar", title: "Jadvallar", icon: "📊", items: [] },
+        { id: "fiz_materiallar", title: "O'quv materiallari", icon: "📂", items: [] }
+      ]
+    },
     { id: "matematika", title: "Matematika", icon: "📐", desc: "", items: [] },
     { id: "kimyo", title: "Kimyo", icon: "🧪", desc: "", items: [] },
     { id: "biologiya", title: "Biologiya", icon: "🧬", desc: "", items: [] },
