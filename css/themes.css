@@ -1,0 +1,217 @@
+/* =========================================================
+   USTURLOB - KENGAYTIRILGAN TEMALAR TIZIMI (8 TEMA x 2 REJIM)
+   Yangi tema qo'shish uchun shunchaki pastga yangi blok qo'shing,
+   sayt menyusi uni o'zi avtomatik taniydi!
+   ========================================================= */
+
+:root {
+  --transition: 0.3s ease;
+}
+
+/* 1. KLASSIK KO'K (Avvalgi asosiy uslub) */
+[data-theme="blue"][data-mode="dark"] {
+  --theme-name: "Klassik Ko'k";
+  --bg-main: #0b132b;
+  --bg-card: #1c2541;
+  --bg-header: rgba(11, 19, 43, 0.92);
+  --text-main: #ffffff;
+  --text-muted: #a8b2d1;
+  --accent: #3a86ff;
+  --accent-hover: #5fa0ff;
+  --border: rgba(58, 134, 255, 0.25);
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+[data-theme="blue"][data-mode="light"] {
+  --theme-name: "Klassik Ko'k";
+  --bg-main: #f0f4f8;
+  --bg-card: #ffffff;
+  --bg-header: rgba(255, 255, 255, 0.92);
+  --text-main: #102a43;
+  --text-muted: #486581;
+  --accent: #1d63dc;
+  --accent-hover: #154bb0;
+  --border: rgba(29, 99, 220, 0.2);
+  --shadow: 0 6px 20px rgba(16, 42, 67, 0.08);
+}
+
+/* 2. ZUMRAD YASHIL */
+[data-theme="emerald"][data-mode="dark"] {
+  --theme-name: "Zumrad Yashil";
+  --bg-main: #061a14;
+  --bg-card: #0f2e24;
+  --bg-header: rgba(6, 26, 20, 0.92);
+  --text-main: #ecfdf5;
+  --text-muted: #99c2b5;
+  --accent: #10b981;
+  --accent-hover: #34d399;
+  --border: rgba(16, 185, 129, 0.25);
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+[data-theme="emerald"][data-mode="light"] {
+  --theme-name: "Zumrad Yashil";
+  --bg-main: #f0fdf4;
+  --bg-card: #ffffff;
+  --bg-header: rgba(255, 255, 255, 0.92);
+  --text-main: #064e3b;
+  --text-muted: #376e5d;
+  --accent: #059669;
+  --accent-hover: #047857;
+  --border: rgba(5, 150, 105, 0.2);
+  --shadow: 0 6px 20px rgba(6, 78, 59, 0.08);
+}
+
+/* 3. KOSMOS BINAFSHA */
+[data-theme="cosmic"][data-mode="dark"] {
+  --theme-name: "Kosmos Binafsha";
+  --bg-main: #120d24;
+  --bg-card: #1f173d;
+  --bg-header: rgba(18, 13, 36, 0.92);
+  --text-main: #f5f3ff;
+  --text-muted: #b4a9d6;
+  --accent: #8b5cf6;
+  --accent-hover: #a78bfa;
+  --border: rgba(139, 92, 246, 0.28);
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+[data-theme="cosmic"][data-mode="light"] {
+  --theme-name: "Kosmos Binafsha";
+  --bg-main: #f5f3ff;
+  --bg-card: #ffffff;
+  --bg-header: rgba(255, 255, 255, 0.92);
+  --text-main: #2e1065;
+  --text-muted: #5b468a;
+  --accent: #7c3aed;
+  --accent-hover: #6d28d9;
+  --border: rgba(124, 58, 237, 0.2);
+  --shadow: 0 6px 20px rgba(46, 16, 101, 0.08);
+}
+
+/* 4. USTURLOB OLTIN */
+[data-theme="amber"][data-mode="dark"] {
+  --theme-name: "Usturlob Oltin";
+  --bg-main: #18130c;
+  --bg-card: #292014;
+  --bg-header: rgba(24, 19, 12, 0.92);
+  --text-main: #fffbeb;
+  --text-muted: #cbbba0;
+  --accent: #f59e0b;
+  --accent-hover: #fbbf24;
+  --border: rgba(245, 158, 11, 0.28);
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+[data-theme="amber"][data-mode="light"] {
+  --theme-name: "Usturlob Oltin";
+  --bg-main: #fffbeb;
+  --bg-card: #ffffff;
+  --bg-header: rgba(255, 255, 255, 0.92);
+  --text-main: #451a03;
+  --text-muted: #785336;
+  --accent: #d97706;
+  --accent-hover: #b45309;
+  --border: rgba(217, 119, 6, 0.22);
+  --shadow: 0 6px 20px rgba(69, 26, 3, 0.08);
+}
+
+/* 5. YOQUT QIZIL */
+[data-theme="crimson"][data-mode="dark"] {
+  --theme-name: "Yoqut Qizil";
+  --bg-main: #1c0b10;
+  --bg-card: #2e131b;
+  --bg-header: rgba(28, 11, 16, 0.92);
+  --text-main: #fff1f2;
+  --text-muted: #d4a3ad;
+  --accent: #ef4444;
+  --accent-hover: #f87171;
+  --border: rgba(239, 68, 68, 0.28);
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+[data-theme="crimson"][data-mode="light"] {
+  --theme-name: "Yoqut Qizil";
+  --bg-main: #fef2f2;
+  --bg-card: #ffffff;
+  --bg-header: rgba(255, 255, 255, 0.92);
+  --text-main: #450a0a;
+  --text-muted: #7f4444;
+  --accent: #dc2626;
+  --accent-hover: #b91c1c;
+  --border: rgba(220, 38, 38, 0.2);
+  --shadow: 0 6px 20px rgba(69, 10, 10, 0.08);
+}
+
+/* 6. OKEAN MOVIY */
+[data-theme="cyan"][data-mode="dark"] {
+  --theme-name: "Okean Moviy";
+  --bg-main: #071921;
+  --bg-card: #0e2c38;
+  --bg-header: rgba(7, 25, 33, 0.92);
+  --text-main: #ecfeff;
+  --text-muted: #98c5d1;
+  --accent: #06b6d4;
+  --accent-hover: #22d3ee;
+  --border: rgba(6, 182, 212, 0.28);
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+[data-theme="cyan"][data-mode="light"] {
+  --theme-name: "Okean Moviy";
+  --bg-main: #ecfeff;
+  --bg-card: #ffffff;
+  --bg-header: rgba(255, 255, 255, 0.92);
+  --text-main: #164e63;
+  --text-muted: #3e7487;
+  --accent: #0891b2;
+  --accent-hover: #0e7490;
+  --border: rgba(8, 145, 178, 0.2);
+  --shadow: 0 6px 20px rgba(22, 78, 99, 0.08);
+}
+
+/* 7. GRAFIT KULRANG */
+[data-theme="slate"][data-mode="dark"] {
+  --theme-name: "Grafit Kulrang";
+  --bg-main: #0f172a;
+  --bg-card: #1e293b;
+  --bg-header: rgba(15, 23, 42, 0.92);
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --accent: #38bdf8;
+  --accent-hover: #7dd3fc;
+  --border: rgba(148, 163, 184, 0.25);
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+[data-theme="slate"][data-mode="light"] {
+  --theme-name: "Grafit Kulrang";
+  --bg-main: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-header: rgba(255, 255, 255, 0.92);
+  --text-main: #0f172a;
+  --text-muted: #475569;
+  --accent: #0284c7;
+  --accent-hover: #0369a1;
+  --border: rgba(100, 116, 139, 0.2);
+  --shadow: 0 6px 20px rgba(15, 23, 42, 0.08);
+}
+
+/* 8. ATIRGUL (ROSE) */
+[data-theme="rose"][data-mode="dark"] {
+  --theme-name: "Atirgul";
+  --bg-main: #1f0c18;
+  --bg-card: #331427;
+  --bg-header: rgba(31, 12, 24, 0.92);
+  --text-main: #fff1f2;
+  --text-muted: #d6a3bd;
+  --accent: #f43f5e;
+  --accent-hover: #fb7185;
+  --border: rgba(244, 63, 94, 0.28);
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+[data-theme="rose"][data-mode="light"] {
+  --theme-name: "Atirgul";
+  --bg-main: #fff1f2;
+  --bg-card: #ffffff;
+  --bg-header: rgba(255, 255, 255, 0.92);
+  --text-main: #4c0519;
+  --text-muted: #883b52;
+  --accent: #e11d48;
+  --accent-hover: #be123c;
+  --border: rgba(225, 29, 72, 0.2);
+  --shadow: 0 6px 20px rgba(76, 5, 25, 0.08);
+}
