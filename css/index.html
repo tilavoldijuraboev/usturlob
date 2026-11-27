@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="uz" data-theme="blue" data-mode="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>USTURLOB — Fizika va Matematika</title>
+  <!-- Temalar va asosiy dizayn fayllari -->
+  <link rel="stylesheet" href="css/themes.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- TEPA PANEL (HEADER) -->
+  <header class="header">
+    <div class="container header-inner">
+      <!-- Chap tomon: Logotip va sarlavha -->
+      <div class="brand" id="homeBtn" title="Asosiy sahifaga qaytish">
+        <span class="brand-title">USTURLOB</span>
+        <span class="brand-subtitle">Fizika & Matematika</span>
+      </div>
+
+      <!-- O'ng tomon: Boshqaruv tugmalari -->
+      <div class="header-actions">
+        <button class="icon-btn" id="searchToggleBtn" title="Qidiruv">🔍</button>
+        <button class="icon-btn" id="themeToggleBtn" title="Mavzular (Temalar)">🎨</button>
+        <button class="icon-btn" id="modeToggleBtn" title="Kun / Tun rejimi">☀️</button>
+        <button class="icon-btn" id="aboutBtn" title="O'zim haqimda">👤</button>
+      </div>
+    </div>
+
+    <!-- YASHIRIN QIDIRUV PANELI (Tugma bosilganda ochiladi) -->
+    <div class="search-bar container hidden" id="searchBar">
+      <input type="text" id="searchInput" placeholder="Mavzu, formula yoki kalkulyator qidiring...">
+      <button class="close-btn" id="searchCloseBtn">✕</button>
+    </div>
+
+    <!-- YASHIRIN TEMALAR MENYUSI (Avtomatik to'ladi) -->
+    <div class="theme-dropdown hidden" id="themeDropdown"></div>
+  </header>
+  <!-- ASOSIY KONTENT QISMI -->
+  <main class="container main-content">
+
+    <!-- 1. ASOSIY SAHIFA KO'RINISHI -->
+    <section id="homeView">
+      <!-- Boyo'g'li (Interaktiv ramz) -->
+      <div class="owl-wrapper">
+        <div id="owlContainer"></div>
+        <p class="owl-hint">Ilm olamiga xush kelibsiz!</p>
+      </div>
+
+      <!-- 6 ta asosiy bo'lim kartochkalari (JS orqali avtomatik chiqadi) -->
+      <div class="sections-grid" id="sectionsGrid"></div>
+    </section>
+
+    <!-- 2. ICHKI SAHIFA KO'RINISHI (Bo'lim, mavzu yoki kalkulyator ochilganda) -->
+    <section id="subView" class="hidden">
+      <div class="sub-header">
+        <button class="back-btn" id="backBtn">← Orqaga</button>
+        <h2 id="subTitle">Bo'lim nomi</h2>
+      </div>
+      <div id="subContent"></div>
+    </section>
+
+    <!-- 3. QIDIRUV NATIJALARI KO'RINISHI -->
+    <section id="searchView" class="hidden">
+      <div class="sub-header">
+        <button class="back-btn" id="searchBackBtn">← Asosiy sahifa</button>
+        <h2>Qidiruv natijalari</h2>
+      </div>
+      <div id="searchResults" class="sections-grid"></div>
+    </section>
+
+  </main>
+
+  <!-- O'ZIM HAQIMDA (MODAL OYNA) -->
+  <div class="modal-overlay hidden" id="aboutModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>O'zim haqimda</h3>
+        <button class="close-btn" id="aboutCloseBtn">✕</button>
+      </div>
+      <div class="modal-body" id="aboutContent">
+        <!-- Ma'lumotlar js/data.js faylidan olinadi -->
+      </div>
+    </div>
+  </div>
+
+  <!-- PASTKI QISM (FOOTER - TELEGRAM HAVOLALAR) -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p class="footer-label">Biz bilan bog'lanish va rasmiy sahifalar:</p>
+      <div class="social-links">
+        <a href="https://t.me" target="_blank" class="social-link">
+          📢 Usturlob Kanal
+        </a>
+        <a href="https://t.me" target="_blank" class="social-link">
+          💬 @Phismath21
+        </a>
+        <a href="https://t.me" target="_blank" class="social-link">
+          👤 @Abdullayev2104
+        </a>
+      </div>
+      <p class="copyright">© 2026 USTURLOB. Barcha huquqlar himoyalangan.</p>
+    </div>
+  </footer>
+
+  <!-- JAVASCRIPT FAYLLAR (Tartib muhim!) -->
+  <script src="js/data.js"></script>
+  <script src="js/owl.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
