@@ -26,7 +26,8 @@ const SITE_DATA = {
         { id: "fiz_masalalar", title: "Masalalar yechimlari", icon: "📝", items: FIZ_MASALALAR },
         { id: "fiz_lab", title: "Elektron laboratoriya", icon: "🔬", items: FIZ_LAB },
         { id: "fiz_oyinlar", title: "O'yinlar", icon: "🎮", items: FIZ_OYINLAR },
-        { id: "fiz_jadvallar", title: "Jadvallar", icon: "📊", items: FIZ_JADVALLAR },
+        { id: "fiz_jadvallar", title: "Jadvallar", icon: "📊", viewType: "list", items: FIZ_JADVALLAR },
+
         { id: "fiz_materiallar", title: "O'quv materiallari", icon: "📂", items: FIZ_MATERIALLAR }
       ]
     },
