@@ -104,5 +104,45 @@ const FIZ_JADVALLAR = [
         </table>
       </div>
     `
+  },
+  {
+    id: "jad_si_birliklar",
+    title: "2. SI asosiy birliklari va old qo'shimchalar",
+    icon: "📏",
+    content: String.raw`
+      <input type="text" class="table-search" placeholder="Jadval ichidan qidirish...">
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Kattalik / Old qo'shimcha</th>
+              <th>Belgisi</th>
+              <th>Birligi / Ko'paytuvchisi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Uzunlik</td><td>$l$</td><td>$\text{metr (m)}$</td></tr>
+            <tr><td>Massa</td><td>$m$</td><td>$\text{kilogramm (kg)}$</td></tr>
+            <tr><td>Vaqt</td><td>$t$</td><td>$\text{sekund (s)}$</td></tr>
+            <tr><td>Tok kuchi</td><td>$I$</td><td>$\text{Amper (A)}$</td></tr>
+            <tr><td>Termodinamik harorat</td><td>$T$</td><td>$\text{Kelvin (K)}$</td></tr>
+            <tr><td>Modda miqdori</td><td>$\nu$</td><td>$\text{mol (mol)}$</td></tr>
+            <tr><td>Yorug'lik kuchi</td><td>$I_v$</td><td>$\text{kandela (cd)}$</td></tr>
+            <tr><td>Tera ($\text{T}$)</td><td>$\text{T}$</td><td class="copy-val" data-copy="1e12">$10^{12}$</td></tr>
+            <tr><td>Giga ($\text{G}$)</td><td>$\text{G}$</td><td class="copy-val" data-copy="1e9">$10^{9}$</td></tr>
+            <tr><td>Mega ($\text{M}$)</td><td>$\text{M}$</td><td class="copy-val" data-copy="1e6">$10^{6}$</td></tr>
+            <tr><td>Kilo ($\text{k}$)</td><td>$\text{k}$</td><td class="copy-val" data-copy="1e3">$10^{3}$</td></tr>
+            <tr><td>Gekto ($\text{h}$)</td><td>$\text{h}$</td><td class="copy-val" data-copy="1e2">$10^{2}$</td></tr>
+            <tr><td>Deka ($\text{da}$)</td><td>$\text{da}$</td><td class="copy-val" data-copy="10">$10^{1}$</td></tr>
+            <tr><td>Detsi ($\text{d}$)</td><td>$\text{d}$</td><td class="copy-val" data-copy="1e-1">$10^{-1}$</td></tr>
+            <tr><td>Santi ($\text{c}$)</td><td>$\text{c}$</td><td class="copy-val" data-copy="1e-2">$10^{-2}$</td></tr>
+            <tr><td>Milli ($\text{m}$)</td><td>$\text{m}$</td><td class="copy-val" data-copy="1e-3">$10^{-3}$</td></tr>
+            <tr><td>Mikro ($\mu$)</td><td>$\mu$</td><td class="copy-val" data-copy="1e-6">$10^{-6}$</td></tr>
+            <tr><td>Nano ($\text{n}$)</td><td>$\text{n}$</td><td class="copy-val" data-copy="1e-9">$10^{-9}$</td></tr>
+            <tr><td>Piko ($\text{p}$)</td><td>$\text{p}$</td><td class="copy-val" data-copy="1e-12">$10^{-12}$</td></tr>
+          </tbody>
+        </table>
+      </div>
+    `
   }
 ];
