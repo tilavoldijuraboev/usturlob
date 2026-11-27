@@ -93,16 +93,31 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function renderMath(el) {
-    if (typeof katex !== "undefined") {
-      el.innerHTML = el.innerHTML
-        .replace(/\$\$([\s\S]+?)\$\$/g, (_, tex) =>
-          katex.renderToString(tex, { displayMode: true, throwOnError: false })
-        )
-        .replace(/\$([^$\n]+?)\$/g, (_, tex) =>
-          katex.renderToString(tex, { displayMode: false, throwOnError: false })
-        );
-    }
+   function renderMath(el) {
+    const greek = {
+      "\\alpha": "α", "\\beta": "β", "\\gamma": "γ", "\\Delta": "Δ",
+      "\\varepsilon": "ε", "\\lambda": "λ", "\\mu": "μ", "\\nu": "ν",
+      "\\rho": "ρ", "\\sigma": "σ", "\\varphi": "φ", "\\omega": "ω",
+      "\\Omega": "Ω", "\\cdot": "·", "\\times": "×"
+    };
+
+    el.innerHTML = el.innerHTML.replace(/\$([^$\n]+?)\$/g, (_, tex) => {
+      let s = tex
+        .replace(/\\text\{([^}]*)\}/g, "$1")
+        .replace(/\{,\}/g, ",")
+        .replace(/\^\{([^}]*)\}/g, "<sup>$1</sup>")
+        .replace(/\^([0-9a-zA-Z+-])/g, "<sup>$1</sup>")
+        .replace(/_\{([^}]*)\}/g, "<sub>$1</sub>")
+        .replace(/_([0-9a-zA-Z])/g, "<sub>$1</sub>");
+
+      Object.keys(greek).forEach(k => {
+        s = s.split(k).join(greek[k]);
+      });
+
+      return `<span style="font-family: 'Cambria Math', 'Times New Roman', serif; font-size: 1.05em;">${s}</span>`;
+    });
+  }
+
   }
 
   function renderNode(node) {
