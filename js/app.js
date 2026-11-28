@@ -100,26 +100,33 @@ document.addEventListener("DOMContentLoaded", () => {
       "\\varepsilon": "ε", "\\lambda": "λ", "\\mu": "μ", "\\nu": "ν",
       "\\rho": "ρ", "\\sigma": "σ", "\\varphi": "φ", "\\omega": "ω",
       "\\Omega": "Ω", "\\cdot": "·", "\\times": "×", "\\circ": "°",
-      "\\approx": "≈", "\\pm": "±", "\\le": "≤", "\\ge": "≥", "\\neq": "≠"
+      "\\approx": "≈", "\\pm": "±", "\\le": "≤", "\\ge": "≥", "\\neq": "≠",
+      "\\pi": "π", "\\Rightarrow": "⇒", "\\rightarrow": "→", "\\cos": "cos", "\\sin": "sin"
     };
 
-    el.innerHTML = el.innerHTML.replace(/\$([^$\n]+?)\$/g, (_, tex) => {
+    function formatTex(tex) {
       let s = tex
-        .replace(/\\frac\{([^}]*)\}\{([^}]*)\}/g, "($1 / $2)")
+        .replace(/\\vec\{([^}]*)\}/g, '<span style="display:inline-block; position:relative;"><span style="position:absolute; top:-0.55em; left:0; right:0; text-align:center; font-size:0.75em;">→</span>$1</span>')
+        .replace(/\\sqrt\{([^}]*)\}/g, '√(<span style="border-top:1px solid currentColor; padding:0 2px;">$1</span>)')
+        .replace(/\\frac\{([^}]*)\}\{([^}]*)\}/g, '<span style="display:inline-flex; flex-direction:column; align-items:center; vertical-align:middle; margin:0 3px; font-size:0.9em;"><span style="border-bottom:1px solid currentColor; padding:0 4px;">$1</span><span style="padding:0 4px;">$2</span></span>')
         .replace(/\\text\{([^}]*)\}/g, "$1")
         .replace(/\{,\}/g, ",")
         .replace(/\\,/g, " ")
         .replace(/\^\{([^}]*)\}/g, "<sup>$1</sup>")
         .replace(/\^(\\?[0-9a-zA-Z+-]+)/g, "<sup>$1</sup>")
         .replace(/_\{([^}]*)\}/g, "<sub>$1</sub>")
-        .replace(/_([0-9a-zA-Z])/g, "<sub>$1</sub>");
+        .replace(/_([0-9a-zA-Z]+)/g, "<sub>$1</sub>");
 
       Object.keys(symbols).forEach(k => {
         s = s.split(k).join(symbols[k]);
       });
 
-      return `<span style="font-family: 'Cambria Math', 'Times New Roman', serif; font-size: 1.05em;">${s}</span>`;
-    });
+      return `<span style="font-family: 'Cambria Math', 'Times New Roman', serif; font-size: 1.08em;">${s}</span>`;
+    }
+
+    el.innerHTML = el.innerHTML
+      .replace(/\$\$([^$]+?)\$\$/g, (_, tex) => `<div style="text-align:center; margin:8px 0;">${formatTex(tex)}</div>`)
+      .replace(/\$([^$\n]+?)\$/g, (_, tex) => formatTex(tex));
   }
   function loadTopicScript(filePath) {
     return new Promise((resolve, reject) => {
