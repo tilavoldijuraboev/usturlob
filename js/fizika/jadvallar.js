@@ -146,7 +146,6 @@ const FIZ_JADVALLAR = [
     `
   }
   ,
-    ,
   {
     id: "jad_zichlik",
     title: "3. Moddalarning zichligi (qattiq, suyuq va gazlar)",
