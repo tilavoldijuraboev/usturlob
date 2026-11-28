@@ -76,6 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   }
+
   function showHome() {
     navStack = [];
     subView.classList.add("hidden");
@@ -94,30 +95,31 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function renderMath(el) {
-    const greek = {
+    const symbols = {
       "\\alpha": "α", "\\beta": "β", "\\gamma": "γ", "\\Delta": "Δ",
       "\\varepsilon": "ε", "\\lambda": "λ", "\\mu": "μ", "\\nu": "ν",
       "\\rho": "ρ", "\\sigma": "σ", "\\varphi": "φ", "\\omega": "ω",
-      "\\Omega": "Ω", "\\cdot": "·", "\\times": "×"
+      "\\Omega": "Ω", "\\cdot": "·", "\\times": "×", "\\circ": "°",
+      "\\approx": "≈", "\\pm": "±", "\\le": "≤", "\\ge": "≥", "\\neq": "≠"
     };
 
     el.innerHTML = el.innerHTML.replace(/\$([^$\n]+?)\$/g, (_, tex) => {
       let s = tex
         .replace(/\\text\{([^}]*)\}/g, "$1")
         .replace(/\{,\}/g, ",")
+        .replace(/\\,/g, " ")
         .replace(/\^\{([^}]*)\}/g, "<sup>$1</sup>")
-        .replace(/\^([0-9a-zA-Z+-])/g, "<sup>$1</sup>")
+        .replace(/\^(\\?[0-9a-zA-Z+-]+)/g, "<sup>$1</sup>")
         .replace(/_\{([^}]*)\}/g, "<sub>$1</sub>")
         .replace(/_([0-9a-zA-Z])/g, "<sub>$1</sub>");
 
-      Object.keys(greek).forEach(k => {
-        s = s.split(k).join(greek[k]);
+      Object.keys(symbols).forEach(k => {
+        s = s.split(k).join(symbols[k]);
       });
 
       return `<span style="font-family: 'Cambria Math', 'Times New Roman', serif; font-size: 1.05em;">${s}</span>`;
     });
   }
-
   function renderNode(node) {
     homeView.classList.add("hidden");
     searchView.classList.add("hidden");
@@ -170,7 +172,7 @@ document.addEventListener("DOMContentLoaded", () => {
         node.onRender(subContent);
       }
     } else if (!node.items || node.items.length === 0) {
-      subContent.innerHTML = `<div class="empty-box"><h3>${node.title}</h3></div>`;
+      subContent.innerHTML = `<div class="empty-box"><h3>${node.title} — tez orada ma'lumotlar qo'shiladi</h3></div>`;
     } else if (node.viewType === "list") {
       subContent.innerHTML = `<div class="list-stack">` + node.items.map((item, idx) => `
         <div class="list-row" data-idx="${idx}">
