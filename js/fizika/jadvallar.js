@@ -194,5 +194,44 @@ const FIZ_JADVALLAR = [
       </div>
     `
   }
+    ,
+  {
+    id: "jad_issiqlik",
+    title: "4. Issiqlik kattaliklari (c, t_erish, t_qaynash)",
+    icon: "🔥",
+    content: String.raw`
+      <input type="text" class="table-search" placeholder="Moddani qidiring (masalan: suv, temir, simob)...">
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Modda</th>
+              <th>Solishtirma issiqlik sig'imi $c$ ($\text{J/(kg}\cdot^\circ\text{C)}$)</th>
+              <th>Erish harorati ($^\circ\text{C}$)</th>
+              <th>Qaynash harorati ($^\circ\text{C}$)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Suv</td><td class="copy-val" data-copy="4200">$4\,200$</td><td class="copy-val" data-copy="0">$0$</td><td class="copy-val" data-copy="100">$100$</td></tr>
+            <tr><td>Muz</td><td class="copy-val" data-copy="2100">$2\,100$</td><td class="copy-val" data-copy="0">$0$</td><td>—</td></tr>
+            <tr><td>Spirt (etanol)</td><td class="copy-val" data-copy="2400">$2\,400$</td><td class="copy-val" data-copy="-114">$-114$</td><td class="copy-val" data-copy="78">$78$</td></tr>
+            <tr><td>Kerosin / Neft</td><td class="copy-val" data-copy="2100">$2\,100$</td><td>—</td><td class="copy-val" data-copy="150">$150\text{–}300$</td></tr>
+            <tr><td>Alyuminiy</td><td class="copy-val" data-copy="920">$920$</td><td class="copy-val" data-copy="660">$660$</td><td class="copy-val" data-copy="2520">$2\,520$</td></tr>
+            <tr><td>Shisha</td><td class="copy-val" data-copy="840">$840$</td><td class="copy-val" data-copy="1000">$\approx 1\,000$</td><td>—</td></tr>
+            <tr><td>Temir / Po'lat</td><td class="copy-val" data-copy="460">$460$</td><td class="copy-val" data-copy="1538">$1\,538$</td><td class="copy-val" data-copy="2860">$2\,860$</td></tr>
+            <tr><td>Mis</td><td class="copy-val" data-copy="400">$400$</td><td class="copy-val" data-copy="1085">$1\,085$</td><td class="copy-val" data-copy="2560">$2\,560$</td></tr>
+            <tr><td>Rux</td><td class="copy-val" data-copy="380">$380$</td><td class="copy-val" data-copy="420">$420$</td><td class="copy-val" data-copy="907">$907$</td></tr>
+            <tr><td>Kumush</td><td class="copy-val" data-copy="250">$250$</td><td class="copy-val" data-copy="962">$962$</td><td class="copy-val" data-copy="2160">$2\,160$</td></tr>
+            <tr><td>Qalay</td><td class="copy-val" data-copy="230">$230$</td><td class="copy-val" data-copy="232">$232$</td><td class="copy-val" data-copy="2600">$2\,600$</td></tr>
+            <tr><td>Simob</td><td class="copy-val" data-copy="140">$140$</td><td class="copy-val" data-copy="-39">$-39$</td><td class="copy-val" data-copy="357">$357$</td></tr>
+            <tr><td>Qo'rg'oshin</td><td class="copy-val" data-copy="130">$130$</td><td class="copy-val" data-copy="327">$327$</td><td class="copy-val" data-copy="1750">$1\,750$</td></tr>
+            <tr><td>Oltin</td><td class="copy-val" data-copy="130">$130$</td><td class="copy-val" data-copy="1064">$1\,064$</td><td class="copy-val" data-copy="2850">$2\,850$</td></tr>
+            <tr><td>Volfram</td><td class="copy-val" data-copy="130">$130$</td><td class="copy-val" data-copy="3422">$3\,422$</td><td class="copy-val" data-copy="5555">$5\,555$</td></tr>
+          </tbody>
+        </table>
+      </div>
+    `
+  }
+
 
 ];
