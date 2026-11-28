@@ -571,7 +571,4 @@ resEl.textContent = Natija: ${quizData.length} ta savoldan ${score} tasi to'g'ri
 </CreativeWritingPad>
 
 <FollowUp>
-Endi `js/fizika/mavzular/mexanika/01-harakat.js` fayli 100% tayyor! Uni saqlab, saytni yangilang va tekshiring:
-* **1.1-mavzu** ichidagi barcha bloklar — **Nisbiylik laboratoriyasi**, **Sudraladigan vektorlar konstruktori**, **Masalalar** va **Testlar** xatosiz ishladimi?
-* Keyingi qadamda **1.2-mavzu** (*To'g'ri chiziqli tekis harakat. Tezlik. Harakat grafiklari*) ga o'tamizmi?
-</FollowUp>
+
