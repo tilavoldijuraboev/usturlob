@@ -105,6 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     el.innerHTML = el.innerHTML.replace(/\$([^$\n]+?)\$/g, (_, tex) => {
       let s = tex
+        .replace(/\\frac\{([^}]*)\}\{([^}]*)\}/g, "($1 / $2)")
         .replace(/\\text\{([^}]*)\}/g, "$1")
         .replace(/\{,\}/g, ",")
         .replace(/\\,/g, " ")
@@ -120,7 +121,31 @@ document.addEventListener("DOMContentLoaded", () => {
       return `<span style="font-family: 'Cambria Math', 'Times New Roman', serif; font-size: 1.05em;">${s}</span>`;
     });
   }
-  function renderNode(node) {
+  function loadTopicScript(filePath) {
+    return new Promise((resolve, reject) => {
+      if (window.LOADED_TOPICS && window.LOADED_TOPICS[filePath]) {
+        resolve(window.LOADED_TOPICS[filePath]);
+        return;
+      }
+      const script = document.createElement("script");
+      script.src = filePath;
+      script.onload = () => {
+        if (window.CURRENT_TOPIC) {
+          window.LOADED_TOPICS = window.LOADED_TOPICS || {};
+          window.LOADED_TOPICS[filePath] = window.CURRENT_TOPIC;
+          const topicData = window.CURRENT_TOPIC;
+          window.CURRENT_TOPIC = null;
+          resolve(topicData);
+        } else {
+          reject(new Error("Mavzu ma'lumoti topilmadi"));
+        }
+      };
+      script.onerror = () => reject(new Error("Fayl yuklanmadi: " + filePath));
+      document.body.appendChild(script);
+    });
+  }
+
+  async function renderNode(node) {
     homeView.classList.add("hidden");
     searchView.classList.add("hidden");
     subView.classList.remove("hidden");
@@ -133,20 +158,70 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("subTitle").textContent = `${node.icon || ""} ${node.title}`;
     const subContent = document.getElementById("subContent");
 
-    if (node.content) {
+    let activeNode = node;
+    if (node.file) {
+      subContent.innerHTML = `<div class="empty-box"><h3>Yuklanmoqda...</h3></div>`;
+      try {
+        const loaded = await loadTopicScript(node.file);
+        activeNode = { ...node, ...loaded };
+      } catch (err) {
+        subContent.innerHTML = `<div class="empty-box"><h3>${node.title} — tez orada tayyor bo'ladi</h3></div>`;
+        return;
+      }
+    }
+
+    if (activeNode.content) {
+      let navFooterHtml = "";
+      const parentNode = navStack.length >= 2 ? navStack[navStack.length - 2] : null;
+      let prevTopic = null;
+      let nextTopic = null;
+
+      if (parentNode && Array.isArray(parentNode.items)) {
+        const currentIdx = parentNode.items.findIndex(i => i.id === node.id);
+        if (currentIdx > 0) prevTopic = parentNode.items[currentIdx - 1];
+        if (currentIdx !== -1 && currentIdx < parentNode.items.length - 1) {
+          nextTopic = parentNode.items[currentIdx + 1];
+        }
+      }
+
+      if (prevTopic || nextTopic) {
+        navFooterHtml = `
+          <div style="display:flex; justify-content:space-between; gap:10px; margin-top:24px; padding-top:16px; border-top:1px solid var(--border); flex-wrap:wrap;">
+            ${prevTopic ? `<button class="back-btn" id="prevTopicBtn">← ${prevTopic.title}</button>` : `<span></span>`}
+            ${nextTopic ? `<button class="back-btn" id="nextTopicBtn">${nextTopic.title} →</button>` : `<span></span>`}
+          </div>
+        `;
+      }
+
       subContent.innerHTML = `
         <div class="detail-card">
           <div class="detail-card-header">
-            <span class="detail-card-title">${node.headerTitle || node.title}</span>
+            <span class="detail-card-title">${activeNode.headerTitle || activeNode.title}</span>
             <button class="detail-close-btn" id="detailCloseBtn" title="Yopish">✕</button>
           </div>
-          <div class="detail-card-body">${node.content}</div>
+          <div class="detail-card-body">
+            ${activeNode.content}
+            ${navFooterHtml}
+          </div>
         </div>
       `;
 
       document.getElementById("detailCloseBtn").addEventListener("click", goBack);
       renderMath(subContent);
 
+      if (prevTopic) {
+        document.getElementById("prevTopicBtn").addEventListener("click", () => {
+          navStack[navStack.length - 1] = prevTopic;
+          renderNode(prevTopic);
+        });
+      }
+
+      if (nextTopic) {
+        document.getElementById("nextTopicBtn").addEventListener("click", () => {
+          navStack[navStack.length - 1] = nextTopic;
+          renderNode(nextTopic);
+        });
+      }
       const tblSearch = subContent.querySelector(".table-search");
       const tblRows = subContent.querySelectorAll("tbody tr");
       if (tblSearch && tblRows.length > 0) {
@@ -168,13 +243,13 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       });
 
-      if (typeof node.onRender === "function") {
-        node.onRender(subContent);
+      if (typeof activeNode.onRender === "function") {
+        activeNode.onRender(subContent);
       }
-    } else if (!node.items || node.items.length === 0) {
-      subContent.innerHTML = `<div class="empty-box"><h3>${node.title} — tez orada ma'lumotlar qo'shiladi</h3></div>`;
-    } else if (node.viewType === "list") {
-      subContent.innerHTML = `<div class="list-stack">` + node.items.map((item, idx) => `
+    } else if (!activeNode.items || activeNode.items.length === 0) {
+      subContent.innerHTML = `<div class="empty-box"><h3>${activeNode.title} — tez orada ma'lumotlar qo'shiladi</h3></div>`;
+    } else if (activeNode.viewType === "list") {
+      subContent.innerHTML = `<div class="list-stack">` + activeNode.items.map((item, idx) => `
         <div class="list-row" data-idx="${idx}">
           <div class="list-row-left">
             <span>${item.icon || "📄"}</span>
@@ -186,7 +261,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       subContent.querySelectorAll(".list-row").forEach(row => {
         row.addEventListener("click", () => {
-          const nextNode = node.items[Number(row.getAttribute("data-idx"))];
+          const nextNode = activeNode.items[Number(row.getAttribute("data-idx"))];
           if (nextNode) {
             navStack.push(nextNode);
             renderNode(nextNode);
@@ -194,7 +269,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       });
     } else {
-      subContent.innerHTML = `<div class="sections-grid">` + node.items.map((item, idx) => `
+      subContent.innerHTML = `<div class="sections-grid">` + activeNode.items.map((item, idx) => `
         <div class="section-card" data-idx="${idx}">
           <div class="card-icon">${item.icon || "📘"}</div>
           <div class="card-info">
@@ -206,7 +281,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       subContent.querySelectorAll(".section-card").forEach(card => {
         card.addEventListener("click", () => {
-          const nextNode = node.items[Number(card.getAttribute("data-idx"))];
+          const nextNode = activeNode.items[Number(card.getAttribute("data-idx"))];
           if (nextNode) {
             navStack.push(nextNode);
             renderNode(nextNode);
