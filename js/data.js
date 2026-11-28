@@ -37,3 +37,29 @@ const SITE_DATA = {
     { id: "kalkulyator", title: "Kalkulyatorlar", icon: "🧮", desc: "", items: [] }
   ]
 };
+
+// AVTO-ULASH (PLUGIN) TIZIMI
+// Kelajakda yangi fan, bo'lim yoki jadval qo'shganda data.js va app.js ni o'zgartirmaysiz!
+const USTURLOB = {
+  add(sectionId, subId, newItems) {
+    if (!Array.isArray(newItems)) return;
+    const sec = SITE_DATA.sections.find(s => s.id === sectionId);
+    if (!sec) return;
+
+    if (!subId) {
+      sec.items.push(...newItems);
+      return;
+    }
+
+    const sub = sec.items.find(i => i.id === subId);
+    if (sub) {
+      sub.items.push(...newItems);
+    }
+  },
+
+  addSection(sectionObj) {
+    if (sectionObj && sectionObj.id) {
+      SITE_DATA.sections.push(sectionObj);
+    }
+  }
+};
